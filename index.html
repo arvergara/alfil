@@ -1,553 +1,758 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alfil Consulting - IA Generativa aplicada a tu Negocio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <style>
-        :root {
-            --primary: #00B8D4;
-            --primary-dark: #0097A7;
-            --secondary: #424242;
-            --light: #F5F5F5;
-            --white: #FFFFFF;
-            --gray: #757575;
-            --success: #4CAF50;
+      :root {
+        --primary: #00b8d4;
+        --primary-dark: #0097a7;
+        --secondary: #424242;
+        --light: #f5f5f5;
+        --white: #ffffff;
+        --gray: #757575;
+        --success: #4caf50;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--secondary);
+        background-color: var(--white);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        background-color: var(--white);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary);
+      }
+
+      .logo span {
+        color: var(--secondary);
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--secondary);
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 4rem 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .hero-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--secondary);
+      }
+
+      .hero-text .highlight {
+        color: var(--primary);
+      }
+
+      .hero-text p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: var(--gray);
+      }
+
+      .hero-image {
+        display: flex;
+        justify-content: center;
+      }
+
+      .hero-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background-color: var(--primary);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .cta-button:hover {
+        background-color: var(--primary-dark);
+      }
+
+      /* About Section */
+      .about {
+        padding: 4rem 0;
+        background-color: var(--white);
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: var(--secondary);
+      }
+
+      .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .about-content p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: var(--gray);
+      }
+
+      .about-image {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .about-image img {
+        max-width: 60%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      /* Services Section */
+      .services {
+        padding: 4rem 0;
+        background-color: var(--light);
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .service-card {
+        background-color: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        text-align: center;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .service-card i {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .service-card h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      /* Framework Section */
+      .framework {
+        padding: 4rem 0;
+        background-color: var(--white);
+      }
+
+      .framework-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .step {
+        text-align: center;
+        padding: 2rem;
+        position: relative;
+      }
+
+      .step::before {
+        content: "";
+        position: absolute;
+        top: 25px;
+        left: 50%;
+        width: calc(100% - 50px);
+        height: 2px;
+        background: var(--primary);
+        z-index: -1;
+        display: none; /* Hide for mobile */
+      }
+
+      @media (min-width: 768px) {
+        .framework-steps {
+          grid-template-columns: repeat(4, 1fr);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .step::before {
+          display: block;
+          left: calc(50% + 25px);
+          width: calc(100% - 50px);
+          top: 25px;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--secondary);
-            background-color: var(--white);
+        .step:first-child::before {
+          display: none;
         }
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+      .step-number {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background-color: var(--primary);
+        color: var(--white);
+        border-radius: 50%;
+        line-height: 50px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
 
-        /* Header */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+      .step h3 {
+        color: var(--secondary);
+        margin-bottom: 1rem;
+      }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
+      /* Projects Section */
+      .projects {
+        padding: 4rem 0;
+        background-color: var(--light);
+      }
 
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
 
-        .logo span {
-            color: var(--secondary);
-        }
+      .project-card {
+        background-color: var(--white);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
+      .project-card:hover {
+        transform: translateY(-5px);
+      }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--secondary);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+      .project-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+      .project-header {
+        background-color: var(--primary);
+        color: var(--white);
+        padding: 1.5rem;
+      }
 
-        /* Hero Section */
-        .hero {
-            padding: 4rem 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
+      .project-content {
+        padding: 1.5rem;
+      }
 
+      .project-content ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .project-content li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .project-content li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--success);
+        font-weight: bold;
+      }
+
+      /* Contact Section */
+      .contact {
+        padding: 4rem 0;
+        background-color: var(--white);
+      }
+
+      .contact-content {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .contact-info {
+        margin-top: 2rem;
+      }
+
+      .contact-info a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--secondary);
+        color: var(--white);
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
+          grid-template-columns: 1fr;
+          text-align: center;
         }
 
         .hero-text h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
+          font-size: 2rem;
         }
 
-        .hero-text .highlight {
-            color: var(--primary);
+        .nav-links {
+          flex-direction: column;
+          gap: 1rem;
         }
 
-        .hero-text p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--gray);
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background-color: var(--primary);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .cta-button:hover {
-            background-color: var(--primary-dark);
-        }
-
-        /* About Section */
-        .about {
-            padding: 4rem 0;
-            background-color: var(--white);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--secondary);
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about-content p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: var(--gray);
-        }
-
-        /* Services Section */
-        .services {
-            padding: 4rem 0;
-            background-color: var(--light);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-card {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .service-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        /* Framework Section */
-        .framework {
-            padding: 4rem 0;
-            background-color: var(--white);
+        .services-grid,
+        .projects-grid {
+          grid-template-columns: 1fr;
         }
 
         .framework-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+          grid-template-columns: 1fr;
         }
 
-        .step {
-            text-align: center;
-            padding: 2rem;
+        .step::before {
+          display: none;
         }
-
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary);
-            color: var(--white);
-            border-radius: 50%;
-            line-height: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .step h3 {
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-
-        /* Projects Section */
-        .projects {
-            padding: 4rem 0;
-            background-color: var(--light);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-header {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 1.5rem;
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .project-content li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .project-content li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 4rem 0;
-            background-color: var(--white);
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-info {
-            margin-top: 2rem;
-        }
-
-        .contact-info a {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--secondary);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .services-grid,
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header -->
     <header>
-        <nav class="container">
-            <div class="logo">Al<span>Fil</span>.</div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
+      <nav class="container">
+        <div class="logo">Al<span>Fil</span>.</div>
+        <ul class="nav-links">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li>
+            <a href="https://www.maindset.cl" target="_blank">Maindset</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1><span class="highlight">IA Generativa</span> aplicada a tu Negocio</h1>
-                    <p>En Alfil Consulting ayudamos a empresas a aplicar estratégicamente la inteligencia artificial (GenAI) y analítica avanzada a sus procesos de negocio críticos.</p>
-                    <p>Con más de 20 años de experiencia en industrias como banca, retail, telecomunicaciones y tecnología, hemos desarrollado modelos de negocio disruptivos que generan valor medible y sostenible.</p>
-                    <a href="#contacto" class="cta-button">Conversemos</a>
-                </div>
-                <div class="hero-image">
-                    <div style="text-align: center;">
-                        <div style="font-size: 8rem; color: var(--primary);">♔</div>
-                        <p style="color: var(--gray); font-style: italic;">Strategic AI. Change the game.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>
+              <span class="highlight">IA Generativa</span> aplicada a tu Negocio
+            </h1>
+            <p>
+              En Alfil Consulting ayudamos a empresas a aplicar estratégicamente
+              la inteligencia artificial (GenAI) y analítica avanzada a sus
+              procesos de negocio críticos.
+            </p>
+            <p>
+              Con más de 20 años de experiencia en industrias como banca,
+              retail, telecomunicaciones y tecnología, hemos desarrollado
+              modelos de negocio disruptivos que generan valor medible y
+              sostenible.
+            </p>
+            <a href="#contacto" class="cta-button">Conversemos</a>
+          </div>
+          <div class="hero-image">
+            <img
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad574?auto=format&fit=crop&q=80&w=1957"
+              alt="Ilustración de Inteligencia Artificial Generativa"
+            />
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- About Section -->
     <section class="about" id="nosotros">
-        <div class="container">
-            <h2 class="section-title">Nuestra Misión</h2>
-            <div class="about-content">
-                <p>Nuestra misión es acelerar la adopción de IA en las organizaciones, generando eficiencia y ventajas competitivas.</p>
-                <p>Ofrecemos diagnósticos de madurez digital, gestión del cambio, formación en competencias de IA y acompañamiento en proyectos de transformación que integran lo tecnológico con el liderazgo humano.</p>
-                <p>Hemos asesorado a empresas líderes en minería, energía, servicios financieros, logística, automotriz, retail y comunicaciones estratégicas, entre otras industrias, ayudándoles a mejorar su propuesta de valor en el mercado y su sustentabilidad.</p>
-            </div>
+      <div class="container">
+        <h2 class="section-title">Nuestra Misión</h2>
+        <div class="about-content">
+          <p>
+            Nuestra misión es acelerar la adopción de IA en las organizaciones,
+            generando eficiencia y ventajas competitivas.
+          </p>
+          <p>
+            Ofrecemos diagnósticos de madurez digital, gestión del cambio,
+            formación en competencias de IA y acompañamiento en proyectos de
+            transformación que integran lo tecnológico con el liderazgo humano.
+          </p>
+          <p>
+            Hemos asesorado a empresas líderes en minería, energía, servicios
+            financieros, logística, automotriz, retail y comunicaciones
+            estratégicas, entre otras industrias, ayudándoles a mejorar su
+            propuesta de valor en el mercado y su sustentabilidad.
+          </p>
         </div>
+        <div class="about-image">
+          <img
+            src="https://images.unsplash.com/photo-1521737600394-fff1ca0deeb4?auto=format&fit=crop&q=80&w=1470"
+            alt="Equipo de consultores trabajando"
+          />
+        </div>
+      </div>
     </section>
 
     <!-- Services Section -->
     <section class="services" id="servicios">
-        <div class="container">
-            <h2 class="section-title">Enfoque Único: Estrategia + Tecnología</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Diagnóstico de Desperdicio de Valor</h3>
-                    <p>Realizamos un diagnóstico exhaustivo de la estrategia, procesos críticos y procesos de generación de valor de cada empresa. Nos enfocamos en entender los problemas y definir hipótesis de solución específicas, aprovechando las capacidades de la IA y la digitalización.</p>
-                </div>
-                <div class="service-card">
-                    <h3>GenAI como catalizador del cambio</h3>
-                    <p>Enfatizamos la importancia de entender a fondo los problemas de la cadena de valor, sintonizando los valores y la misión de la empresa, con las oportunidades y sus ventajas competitivas. Diseñamos prototipos en forma ágil, que permitan mostrar la potencia de una solución, antes de implementar.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Orientación ágil</h3>
-                    <p>Aplicamos la tecnología para resolver problemas de negocio reales, comprendiendo el funcionamiento humano y los procesos. Nuestro enfoque se basa en la conexión entre el expertise de negocios y las nuevas capacidades que ofrece la tecnología.</p>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title">Enfoque Único: Estrategia + Tecnología</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <i class="fas fa-search"></i>
+            <h3>Diagnóstico de Desperdicio de Valor</h3>
+            <p>
+              Realizamos un diagnóstico exhaustivo de la estrategia, procesos
+              críticos y procesos de generación de valor de cada empresa. Nos
+              enfocamos en entender los problemas y definir hipótesis de
+              solución específicas, aprovechando las capacidades de la IA y la
+              digitalización.
+            </p>
+          </div>
+          <div class="service-card">
+            <i class="fas fa-rocket"></i>
+            <h3>GenAI como catalizador del cambio</h3>
+            <p>
+              Enfatizamos la importancia de entender a fondo los problemas de la
+              cadena de valor, sintonizando los valores y la misión de la
+              empresa, con las oportunidades y sus ventajas competitivas.
+              Diseñamos prototipos en forma ágil, que permitan mostrar la
+              potencia de una solución, antes de implementar.
+            </p>
+          </div>
+          <div class="service-card">
+            <i class="fas fa-sync-alt"></i>
+            <h3>Orientación ágil</h3>
+            <p>
+              Aplicamos la tecnología para resolver problemas de negocio reales,
+              comprendiendo el funcionamiento humano y los procesos. Nuestro
+              enfoque se basa en la conexión entre el expertise de negocios y
+              las nuevas capacidades que ofrece la tecnología.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Framework Section -->
     <section class="framework">
-        <div class="container">
-            <h2 class="section-title">Framework TDO-IA: Transformative AI</h2>
-            <div class="framework-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Evaluación Inicial y Diagnóstico</h3>
-                    <p>Identificamos cuellos de botella, problemas y áreas de mejora mediante reuniones con stakeholders, auditoría de procesos y análisis de datos existentes, a partir de la Estrategia de la Compañía.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Priorización de Oportunidades</h3>
-                    <p>Evaluamos el impacto vs. esfuerzo para cada área identificada y clasificamos las oportunidades en términos de viabilidad y beneficio.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Diseño de Soluciones Tecnológicas</h3>
-                    <p>Diseñamos soluciones específicas, identificando tecnologías adecuadas y desarrollando con GenAI casos de uso, prototipos y robustas implementaciones.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Implementación Ágil</h3>
-                    <p>Implementamos las soluciones de manera eficiente y rápida, utilizando metodologías ágiles para la gestión de proyectos.</p>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title">Framework TDO-IA: Transformative AI</h2>
+        <div class="framework-steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Evaluación Inicial y Diagnóstico</h3>
+            <p>
+              Identificamos cuellos de botella, problemas y áreas de mejora
+              mediante reuniones con stakeholders, auditoría de procesos y
+              análisis de datos existentes, a partir de la Estrategia de la
+              Compañía.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Priorización de Oportunidades</h3>
+            <p>
+              Evaluamos el impacto vs. esfuerzo para cada área identificada y
+              clasificamos las oportunidades en términos de viabilidad y
+              beneficio.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Diseño de Soluciones Tecnológicas</h3>
+            <p>
+              Diseñamos soluciones específicas, identificando tecnologías
+              adecuadas y desarrollando con GenAI casos de uso, prototipos y
+              robustas implementaciones.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Implementación Ágil</h3>
+            <p>
+              Implementamos las soluciones de manera eficiente y rápida,
+              utilizando metodologías ágiles para la gestión de proyectos.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Projects Section -->
     <section class="projects" id="proyectos">
-        <div class="container">
-            <h2 class="section-title">Proyectos Destacados</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>GasConnect - Gasco</h3>
-                    </div>
-                    <div class="project-content">
-                        <ul>
-                            <li>Transformación del modelo de negocio de analógico a digital</li>
-                            <li>Optimización de rutas con IA</li>
-                            <li>Mejor conocimiento del cliente final</li>
-                            <li>Premio a la mejor aplicación mundial para distribución de gas</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Voltera - Electromovilidad</h3>
-                    </div>
-                    <div class="project-content">
-                        <ul>
-                            <li>Co-fundación de empresa líder en electromovilidad</li>
-                            <li>Implementación de flotas eléctricas para logística y minería</li>
-                            <li>Modelos de financiamiento innovadores</li>
-                            <li>Posicionamiento competitivo frente a grandes actores</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Ripley - Analítica Avanzada</h3>
-                    </div>
-                    <div class="project-content">
-                        <ul>
-                            <li>Modelo de pricing dinámico</li>
-                            <li>Sistema de supply chain mejorado</li>
-                            <li>Personalización web y cross sell</li>
-                            <li>Mejora en competitividad y rentabilidad</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>WOM - Fábrica Digital</h3>
-                    </div>
-                    <div class="project-content">
-                        <ul>
-                            <li>Reducción del churn en 20% en 4 meses</li>
-                            <li>Creación de equipo de IA</li>
-                            <li>Implementación de metodologías ágiles</li>
-                            <li>Mejora de satisfacción del cliente</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>BBVA Chile - Decisiones basadas en datos</h3>
-                    </div>
-                    <div class="project-content">
-                        <ul>
-                            <li>Aumento del 10% en retención de clientes</li>
-                            <li>Desarrollo de soluciones ML in-house</li>
-                            <li>Estrategias efectivas de cross sell</li>
-                            <li>Posicionamiento como líder en IA financiera</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Grupo Kaufmann - Centro de Excelencia</h3>
-                    </div>
-                    <div class="project-content">
-                        <ul>
-                            <li>Creación de equipo de analítica avanzada</li>
-                            <li>Centro de excelencia corporativo</li>
-                            <li>Metodología para soluciones analíticas</li>
-                            <li>Fábrica de modelos analíticos</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="section-title">Proyectos Destacados</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1504197832207-769cd03b690c?auto=format&fit=crop&q=80&w=1470"
+                alt="Distribución de gas"
+              />
             </div>
+            <div class="project-header">
+              <h3>GasConnect - Gasco</h3>
+            </div>
+            <div class="project-content">
+              <ul>
+                <li>
+                  Transformación del modelo de negocio de analógico a digital
+                </li>
+                <li>Optimización de rutas con IA</li>
+                <li>Mejor conocimiento del cliente final</li>
+                <li>
+                  Premio a la mejor aplicación mundial para distribución de gas
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1570549717489-50111e9e093f?auto=format&fit=crop&q=80&w=1470"
+                alt="Electromovilidad"
+              />
+            </div>
+            <div class="project-header">
+              <h3>Voltera - Electromovilidad</h3>
+            </div>
+            <div class="project-content">
+              <ul>
+                <li>Co-fundación de empresa líder en electromovilidad</li>
+                <li>
+                  Implementación de flotas eléctricas para logística y minería
+                </li>
+                <li>Modelos de financiamiento innovadores</li>
+                <li>Posicionamiento competitivo frente a grandes actores</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1470"
+                alt="Analítica avanzada"
+              />
+            </div>
+            <div class="project-header">
+              <h3>Ripley - Analítica Avanzada</h3>
+            </div>
+            <div class="project-content">
+              <ul>
+                <li>Modelo de pricing dinámico</li>
+                <li>Sistema de supply chain mejorado</li>
+                <li>Personalización web y cross sell</li>
+                <li>Mejora en competitividad y rentabilidad</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea271?auto=format&fit=crop&q=80&w=1470"
+                alt="Fábrica digital"
+              />
+            </div>
+            <div class="project-header">
+              <h3>WOM - Fábrica Digital</h3>
+            </div>
+            <div class="project-content">
+              <ul>
+                <li>Reducción del churn en 20% en 4 meses</li>
+                <li>Creación de equipo de IA</li>
+                <li>Implementación de metodologías ágiles</li>
+                <li>Mejora de satisfacción del cliente</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1554224155-6726b3ff95f4?auto=format&fit=crop&q=80&w=1470"
+                alt="Banca y finanzas"
+              />
+            </div>
+            <div class="project-header">
+              <h3>BBVA Chile - Decisiones basadas en datos</h3>
+            </div>
+            <div class="project-content">
+              <ul>
+                <li>Aumento del 10% en retención de clientes</li>
+                <li>Desarrollo de soluciones ML in-house</li>
+                <li>Estrategias efectivas de cross sell</li>
+                <li>Posicionamiento como líder en IA financiera</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1523240795612-9a054b0dd81c?auto=format&fit=crop&q=80&w=1470"
+                alt="Centro de excelencia"
+              />
+            </div>
+            <div class="project-header">
+              <h3>Grupo Kaufmann - Centro de Excelencia</h3>
+            </div>
+            <div class="project-content">
+              <ul>
+                <li>Creación de equipo de analítica avanzada</li>
+                <li>Centro de excelencia corporativo</li>
+                <li>Metodología para soluciones analíticas</li>
+                <li>Fábrica de modelos analíticos</li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section class="contact" id="contacto">
-        <div class="container">
-            <h2 class="section-title">¿Listo para transformar tu negocio con IA?</h2>
-            <div class="contact-content">
-                <p>Conversemos sobre cómo la IA Generativa puede impulsar tu organización hacia el futuro.</p>
-                <div class="contact-info">
-                    <p><strong>Andrés Vergara</strong></p>
-                    <p>Socio Fundador</p>
-                    <p><a href="https://www.linkedin.com/in/arvergara/" target="_blank">LinkedIn: /in/arvergara</a></p>
-                </div>
-                <a href="mailto:contacto@alfil.cl" class="cta-button" style="margin-top: 2rem;">Contactar</a>
-            </div>
+      <div class="container">
+        <h2 class="section-title">
+          ¿Listo para transformar tu negocio con IA?
+        </h2>
+        <div class="contact-content">
+          <p>
+            Conversemos sobre cómo la IA Generativa puede impulsar tu
+            organización hacia el futuro.
+          </p>
+          <div class="contact-info">
+            <p><strong>Andrés Vergara</strong></p>
+            <p>Socio Fundador</p>
+            <p>
+              <a href="https://www.linkedin.com/in/arvergara/" target="_blank"
+                >LinkedIn: /in/arvergara</a
+              >
+            </p>
+          </div>
+          <a
+            href="mailto:contacto@alfil.cl"
+            class="cta-button"
+            style="margin-top: 2rem"
+            >Contactar</a
+          >
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>&copy; 2024 Alfil Consulting. Todos los derechos reservados.</p>
-            <p>Strategic AI. Change the game.</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2024 Alfil Consulting. Todos los derechos reservados.</p>
+        <p>
+          Strategic AI. Change the game. | En asociación con
+          <a href="https://www.maindset.cl" target="_blank">Maindset</a>
+        </p>
+      </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
         });
+      });
     </script>
-</body>
+  </body>
 </html>
