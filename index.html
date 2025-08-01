@@ -217,44 +217,82 @@
         background-color: var(--white);
       }
 
+      .framework-container {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .framework-image-container {
+        position: relative;
+        width: 100%;
+        margin-top: 2rem;
+      }
+
+      .framework-image-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        filter: brightness(0.3);
+      }
+
       .framework-steps {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 2rem;
-        margin-top: 3rem;
+        z-index: 1;
       }
 
       .step {
         text-align: center;
-        padding: 2rem;
+        padding: 1.5rem;
         position: relative;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .step:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       }
 
       .step::before {
         content: "";
         position: absolute;
-        top: 25px;
-        left: 50%;
-        width: calc(100% - 50px);
-        height: 2px;
+        top: 50%;
+        right: -1rem;
+        width: 2rem;
+        height: 3px;
         background: var(--primary);
         z-index: -1;
-        display: none; /* Hide for mobile */
       }
 
-      @media (min-width: 768px) {
+      .step:last-child::before {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
         .framework-steps {
-          grid-template-columns: repeat(4, 1fr);
+          position: relative;
+          transform: none;
+          top: auto;
+          left: auto;
+          grid-template-columns: 1fr;
+          margin-top: 2rem;
+        }
+
+        .framework-image-container {
+          display: none;
         }
 
         .step::before {
-          display: block;
-          left: calc(50% + 25px);
-          width: calc(100% - 50px);
-          top: 25px;
-        }
-
-        .step:first-child::before {
           display: none;
         }
       }
@@ -275,6 +313,12 @@
       .step h3 {
         color: var(--secondary);
         margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .step p {
+        font-size: 0.9rem;
+        color: var(--gray);
       }
 
       /* Projects Section */
@@ -532,10 +576,10 @@
     <section class="framework">
       <div class="container">
         <h2 class="section-title">Framework TDO-IA: Transformative AI</h2>
-        <div style="text-align: center; margin: 2rem 0;">
-          <img src="FrameworkTDO.jpg" alt="Framework TDO-IA" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
-        </div>
-        <div class="framework-steps">
+        <div class="framework-container">
+          <div class="framework-image-container">
+            <img src="FrameworkTDO.jpg" alt="Framework TDO-IA">
+            <div class="framework-steps">
           <div class="step">
             <div class="step-number">1</div>
             <h3>Evaluación Inicial y Diagnóstico</h3>
@@ -571,6 +615,8 @@
               Implementamos las soluciones de manera eficiente y rápida,
               utilizando metodologías ágiles para la gestión de proyectos.
             </p>
+          </div>
+            </div>
           </div>
         </div>
       </div>
