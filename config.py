@@ -41,6 +41,12 @@ class Settings(BaseSettings):
     MAILCHIMP_LIST_ID_ASOCIADOS: str = Field(default="", description="List ID for Asociados ACAFI")
     MAILCHIMP_LIST_ID_COLABORADORES: str = Field(default="", description="List ID for Colaboradores ACAFI")
     MAILCHIMP_TEMPLATE_ID: str = Field(default="", description="Template ID for newsletter")
+
+    # Canva Configuration
+    CANVA_API_KEY: Optional[SecretStr] = Field(default=None, env="CANVA_API_KEY")
+    CANVA_EXPORT_DIR: Path = Field(default=PROJECT_ROOT / "exports", description="Directory for Canva PDF exports")
+    CANVA_EXPORT_TIMEOUT: int = Field(default=300, description="Timeout for Canva export operations in seconds")
+    CANVA_EXPORT_QUALITY: str = Field(default="high", description="Default export quality (low, medium, high)")
     
     # Gmail Configuration (fallback)
     GMAIL_CREDENTIALS_FILE: Path = Field(default=PROJECT_ROOT / "credentials.json")
@@ -115,3 +121,4 @@ settings = Settings()
 settings.DATA_DIR.mkdir(parents=True, exist_ok=True)
 settings.LOGS_DIR.mkdir(parents=True, exist_ok=True)
 settings.TEMPLATES_DIR.mkdir(parents=True, exist_ok=True)
+settings.CANVA_EXPORT_DIR.mkdir(parents=True, exist_ok=True)

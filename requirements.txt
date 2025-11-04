@@ -60,3 +60,6 @@ python-dateutil>=2.8.0
 pytz>=2023.3
 httpx>=0.25.0
 tenacity>=8.2.0
+
+# Canva to PDF conversion
+# (uses requests which is already included above)
