@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>16 Prompts First Principles - MAindset</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #00b8d4;
+        --primary-dark: #0097a7;
+        --secondary: #424242;
+        --light: #f5f5f5;
+        --white: #ffffff;
+        --gray: #757575;
+        --success: #4caf50;
+        --warning: #ff9800;
+        --code-bg: #1e1e1e;
+        --code-text: #d4d4d4;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--secondary);
+        background-color: var(--light);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        background-color: var(--white);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary);
+      }
+
+      .logo span {
+        color: var(--secondary);
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--secondary);
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 4rem 0;
+        background: linear-gradient(135deg, #0097a7 0%, #00b8d4 50%, #26c6da 100%);
+        color: var(--white);
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        margin-top: 1.5rem;
+        font-weight: 500;
+      }
+
+      /* Methodology Section */
+      .methodology {
+        padding: 3rem 0;
+        background: var(--white);
+      }
+
+      .methodology-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .method-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: var(--light);
+        border-radius: 10px;
+        border-left: 4px solid var(--primary);
+      }
+
+      .method-item i {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .method-item h4 {
+        color: var(--secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      /* Table of Contents */
+      .toc {
+        padding: 2rem 0;
+        background: var(--white);
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .toc-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .toc-item {
+        padding: 1rem;
+        background: var(--light);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--secondary);
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .toc-item:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: translateY(-2px);
+      }
+
+      .toc-number {
+        width: 28px;
+        height: 28px;
+        background: var(--primary);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+
+      .toc-item:hover .toc-number {
+        background: var(--white);
+        color: var(--primary);
+      }
+
+      /* Prompts Section */
+      .prompts-section {
+        padding: 3rem 0;
+      }
+
+      .prompt-card {
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+        overflow: hidden;
+      }
+
+      .prompt-header {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        color: var(--white);
+        padding: 1.5rem 2rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .prompt-header:hover {
+        background: linear-gradient(135deg, #007c8a, var(--primary-dark));
+      }
+
+      .prompt-header h2 {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.4rem;
+      }
+
+      .prompt-number {
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .toggle-icon {
+        font-size: 1.5rem;
+        transition: transform 0.3s;
+      }
+
+      .prompt-card.collapsed .toggle-icon {
+        transform: rotate(-90deg);
+      }
+
+      .prompt-content {
+        padding: 2rem;
+        display: block;
+      }
+
+      .prompt-card.collapsed .prompt-content {
+        display: none;
+      }
+
+      /* Subsections */
+      .subsection {
+        margin-bottom: 2rem;
+      }
+
+      .subsection:last-child {
+        margin-bottom: 0;
+      }
+
+      .subsection-title {
+        font-size: 1.1rem;
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .subsection-title i {
+        color: var(--primary);
+      }
+
+      /* Original Prompt */
+      .original-prompt {
+        background: var(--light);
+        padding: 1rem 1.5rem;
+        border-left: 4px solid var(--gray);
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+        color: var(--gray);
+        margin-bottom: 1rem;
+      }
+
+      /* Analysis Box */
+      .analysis-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .strength-box, .weakness-box {
+        padding: 1rem;
+        border-radius: 8px;
+      }
+
+      .strength-box {
+        background: #e8f5e9;
+        border-left: 4px solid var(--success);
+      }
+
+      .weakness-box {
+        background: #fff3e0;
+        border-left: 4px solid var(--warning);
+      }
+
+      .strength-box h4, .weakness-box h4 {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .strength-box h4 {
+        color: #2e7d32;
+      }
+
+      .weakness-box h4 {
+        color: #e65100;
+      }
+
+      /* Code Blocks */
+      .code-block {
+        background: var(--code-bg);
+        color: var(--code-text);
+        padding: 1.5rem;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 0.9rem;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .code-block .highlight {
+        color: #569cd6;
+      }
+
+      .code-block .number {
+        color: #b5cea8;
+      }
+
+      .code-block .string {
+        color: #ce9178;
+      }
+
+      /* Tables */
+      .table-container {
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border: 1px solid #e0e0e0;
+      }
+
+      th {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background: var(--light);
+      }
+
+      /* Summary Section */
+      .summary-section {
+        padding: 3rem 0;
+        background: var(--white);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .summary-card {
+        background: var(--light);
+        padding: 2rem;
+        border-radius: 15px;
+      }
+
+      .summary-card h3 {
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .summary-card ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .summary-card li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .summary-card li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+        font-weight: bold;
+      }
+
+      /* Phase Badges */
+      .phase-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .phase-assessment {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+
+      .phase-execution {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+
+      .phase-expansion {
+        background: #fce4ec;
+        color: #c2185b;
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--secondary);
+        color: var(--white);
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .toc-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .methodology-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .toc-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .methodology-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .analysis-box {
+          grid-template-columns: 1fr;
+        }
+
+        .prompt-header h2 {
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Back to top */
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: all 0.3s;
+        z-index: 999;
+      }
+
+      .back-to-top:hover {
+        background: var(--primary-dark);
+        transform: translateY(-3px);
+      }
+
+      /* Section Title */
+      .section-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--secondary);
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--gray);
+        max-width: 700px;
+        margin: 0 auto 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav class="container">
+        <a href="index.html" class="logo">MAind<span>set</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="#metodologia">Metodologia</a></li>
+          <li><a href="#prompts">Prompts</a></li>
+          <li><a href="#resumen">Resumen</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>16 Prompts "First Principles"</h1>
+        <p>
+          Analisis Experto y Optimizacion de Prompts aplicados a MAindset -
+          Consultora de IA Generativa
+        </p>
+        <div class="hero-badge">
+          <i class="fas fa-brain"></i> Framework de Pensamiento Estrategico
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology" id="metodologia">
+      <div class="container">
+        <h2 class="section-title">Metodologia de Analisis</h2>
+        <p class="section-subtitle">Para cada prompt evaluamos cuatro dimensiones clave</p>
+        <div class="methodology-grid">
+          <div class="method-item">
+            <i class="fas fa-check-circle"></i>
+            <h4>Fortalezas</h4>
+            <p>Aspectos positivos del prompt original</p>
+          </div>
+          <div class="method-item">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h4>Debilidades</h4>
+            <p>Areas de mejora identificadas</p>
+          </div>
+          <div class="method-item">
+            <i class="fas fa-magic"></i>
+            <h4>Version Optimizada</h4>
+            <p>Estructura mejorada y accionable</p>
+          </div>
+          <div class="method-item">
+            <i class="fas fa-rocket"></i>
+            <h4>Aplicacion MAindset</h4>
+            <p>Prompt listo para consultoria GenAI</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="toc">
+      <div class="container">
+        <h2 class="section-title">Indice de Prompts</h2>
+        <div class="toc-grid">
+          <a href="#prompt-1" class="toc-item">
+            <span class="toc-number">1</span>
+            <span>La Fisica del Problema</span>
+          </a>
+          <a href="#prompt-2" class="toc-item">
+            <span class="toc-number">2</span>
+            <span>Eliminar Suposiciones</span>
+          </a>
+          <a href="#prompt-3" class="toc-item">
+            <span class="toc-number">3</span>
+            <span>Componentes Fundamentales</span>
+          </a>
+          <a href="#prompt-4" class="toc-item">
+            <span class="toc-number">4</span>
+            <span>Solucion Sin Costo</span>
+          </a>
+          <a href="#prompt-5" class="toc-item">
+            <span class="toc-number">5</span>
+            <span>Eliminacion del 90%</span>
+          </a>
+          <a href="#prompt-6" class="toc-item">
+            <span class="toc-number">6</span>
+            <span>Causa Raiz del Fracaso</span>
+          </a>
+          <a href="#prompt-7" class="toc-item">
+            <span class="toc-number">7</span>
+            <span>Ignorar Normas</span>
+          </a>
+          <a href="#prompt-8" class="toc-item">
+            <span class="toc-number">8</span>
+            <span>Imposible vs Dificil</span>
+          </a>
+          <a href="#prompt-9" class="toc-item">
+            <span class="toc-number">9</span>
+            <span>Minimum Viable Breakthrough</span>
+          </a>
+          <a href="#prompt-10" class="toc-item">
+            <span class="toc-number">10</span>
+            <span>Reinicio con Conocimiento</span>
+          </a>
+          <a href="#prompt-11" class="toc-item">
+            <span class="toc-number">11</span>
+            <span>Restricciones Ocultas</span>
+          </a>
+          <a href="#prompt-12" class="toc-item">
+            <span class="toc-number">12</span>
+            <span>Fisica vs Politica</span>
+          </a>
+          <a href="#prompt-13" class="toc-item">
+            <span class="toc-number">13</span>
+            <span>10x Mas Rapido</span>
+          </a>
+          <a href="#prompt-14" class="toc-item">
+            <span class="toc-number">14</span>
+            <span>Escala a Millones</span>
+          </a>
+          <a href="#prompt-15" class="toc-item">
+            <span class="toc-number">15</span>
+            <span>Maximo Leverage</span>
+          </a>
+          <a href="#prompt-16" class="toc-item">
+            <span class="toc-number">16</span>
+            <span>Reconstruir desde la Verdad</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prompts Section -->
+    <section class="prompts-section" id="prompts">
+      <div class="container">
+
+        <!-- PROMPT 1 -->
+        <div class="prompt-card" id="prompt-1">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">1</span>
+              La Fisica del Problema
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What are the physics of this problem?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Fuerza pensamiento objetivo, elimina suposiciones emocionales.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Demasiado abstracto, no guia hacia accion especifica. La metafora "fisica" puede confundir en contextos de negocio.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">Actua como un fisico de sistemas empresariales. Analiza [PROBLEMA] identificando:
+
+1. RESTRICCIONES INAMOVIBLES: Que limitaciones son leyes naturales del negocio
+   (regulaciones, fisica, matematicas) vs. cuales son solo convenciones?
+
+2. FUERZAS EN JUEGO: Que fuerzas impulsan y cuales resisten el cambio?
+   Cuantifica cuando sea posible.
+
+3. CUELLOS DE BOTELLA REALES: Donde esta el constraint que limita todo el sistema?
+
+4. VARIABLES MANIPULABLES: Que palancas podemos realmente mover?
+
+Responde con brutal honestidad, sin considerar politica organizacional.</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">Eres un arquitecto de transformacion digital especializado en IA Generativa.
+Un cliente de [INDUSTRIA] nos dice: "[PROBLEMA DEL CLIENTE]"
+
+Analiza la "fisica" real de su situacion:
+
+1. RESTRICCIONES INAMOVIBLES
+   - Que limitaciones tecnicas son reales? (capacidad de computo, calidad de datos, integraciones)
+   - Que restricciones regulatorias aplican? (privacidad, compliance, industria especifica)
+   - Que es matematicamente imposible vs. solo dificil?
+
+2. FUERZAS DEL SISTEMA
+   - Impulsores: Que presiones de mercado, competencia o eficiencia empujan hacia GenAI?
+   - Resistencias: Que fricciones culturales, tecnicas o de recursos frenan la adopcion?
+
+3. CUELLO DE BOTELLA CRITICO
+   - Es falta de datos? Resistencia cultural? Capacidades tecnicas? Claridad estrategica?
+   - Identifica el ONE THING que si se resuelve, desbloquea todo lo demas.
+
+4. PALANCAS DE ALTO IMPACTO
+   - Que podemos cambiar que tenga efecto multiplicador?
+   - Donde esta el 20% de esfuerzo que genera 80% de resultados?
+
+Contexto MAindset: Nuestro enfoque es Assessment → Ejecucion → Expansion.
+En que fase deberia enfocarse este cliente y por que?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 2 -->
+        <div class="prompt-card" id="prompt-2">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">2</span>
+              Eliminar Suposiciones
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "If I couldn't rely on existing assumptions, how would I solve this?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Desafia el status quo, abre espacio para innovacion radical.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>No especifica QUE suposiciones cuestionar. Puede llevar a respuestas demasiado teoricas.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">Imagina que eres un outsider brillante que nunca ha trabajado en [INDUSTRIA].
+No conoces "como se hacen las cosas aqui".
+
+Para resolver [PROBLEMA]:
+
+1. INVENTARIO DE SUPOSICIONES
+   Lista las 10 cosas que "todos saben" sobre como funciona este problema/industria.
+
+2. INVERSION DE SUPOSICIONES
+   Para cada una, pregunta: "Que pasaria si lo opuesto fuera verdad?"
+
+3. SOLUCION DE PRIMER PRINCIPIO
+   Si tuvieras que resolver esto desde cero, con tecnologia actual pero sin
+   bagaje historico, que harias?
+
+4. HIBRIDO PRAGMATICO
+   Que elementos de tu solucion radical pueden implementarse dentro del sistema actual?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">Eres un consultor de IA que viene del futuro (2030) donde la GenAI esta
+completamente integrada en todas las organizaciones.
+
+El cliente [NOMBRE] en [INDUSTRIA] opera bajo estas suposiciones actuales:
+[LISTA DE COMO OPERA HOY]
+
+EJERCICIO DE DECONSTRUCCION:
+
+1. SUPOSICIONES INVISIBLES
+   Que asumen sobre:
+   - Como deben estructurarse los equipos?
+   - Que tareas "requieren" humanos?
+   - Cuanto tiempo "deben" tomar ciertos procesos?
+   - Que roles son "esenciales"?
+
+2. PRUEBA DE INVERSION
+   | Suposicion Actual | Inversion | Viable con GenAI? |
+   |-------------------|-----------|-------------------|
+   | [ejemplo]         | [opuesto] | [analisis]        |
+
+3. DISENO "GREENFIELD"
+   Si este cliente abriera una nueva division HOY, sin legacy,
+   como la estructurarian usando GenAI desde el dia 1?
+
+4. ROADMAP DE TRANSICION
+   Como llevamos al cliente del estado actual al estado ideal en 12-18 meses
+   usando nuestro modelo Assessment → Ejecucion → Expansion?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 3 -->
+        <div class="prompt-card" id="prompt-3">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">3</span>
+              Componentes Fundamentales
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What are the problem's fundamental components?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Promueve descomposicion sistematica.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Muy generico, no provee framework de descomposicion.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">Descompon [PROBLEMA] en sus atomos constituyentes usando este framework:
+
+1. ACTORES: Quienes estan involucrados? Que quiere cada uno?
+
+2. PROCESOS: Que flujos de trabajo existen? Mapea inputs → transformaciones → outputs.
+
+3. DATOS: Que informacion se crea, consume, transforma? Donde vive?
+
+4. DECISIONES: Que decisiones se toman? Con que informacion? Por quien?
+
+5. INTERFACES: Donde interactuan los componentes? Cuales son los puntos de friccion?
+
+6. DEPENDENCIAS: Que debe ocurrir antes de que? Cual es el camino critico?
+
+Para cada componente, clasifica:
+- CORE (esencial, no eliminable)
+- OPTIMIZABLE (mejorable con tecnologia/proceso)
+- ELIMINABLE (existe por inercia, no agrega valor)</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">El cliente [NOMBRE] quiere implementar GenAI para [OBJETIVO].
+
+Realiza una "Anatomia del Proceso" completa:
+
+1. MAPA DE ACTORES Y MOTIVACIONES
+   | Actor | Rol Actual | Pain Points | Como GenAI ayuda? | Resistencias Esperadas |
+   |-------|-----------|-------------|-------------------|------------------------|
+
+2. FLUJO DE TRABAJO ACTUAL (AS-IS)
+   Documenta el proceso paso a paso:
+   - Trigger inicial
+   - Secuencia de actividades
+   - Puntos de decision
+   - Handoffs entre personas/sistemas
+   - Output final
+
+3. ANATOMIA DE DATOS
+   - Que datos se usan? (estructurados, no estructurados, conversacionales)
+   - Donde viven? (sistemas, formatos, accesibilidad)
+   - Que calidad tienen? (completitud, actualizacion, consistencia)
+   - Que datos FALTAN que GenAI podria generar/sintetizar?
+
+4. MAPA DE DECISIONES
+   | Decision | Frecuencia | Complejidad | Automatizable con GenAI? | Riesgo de Error |
+   |----------|-----------|-------------|--------------------------|-----------------|
+
+5. PUNTOS DE INTERVENCION OPTIMOS
+   Identifica los 3-5 puntos donde GenAI tendria mayor impacto con menor friccion.
+   Clasifica por: Impacto x Facilidad de Implementacion x Visibilidad
+
+6. PROPUESTA DE PILOTO
+   Basado en el analisis, cual seria el piloto ideal para el programa EXPLORA de MAindset?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 4 -->
+        <div class="prompt-card" id="prompt-4">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">4</span>
+              Solucion Optima Sin Restricciones de Costo
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What would the optimal solution look like if cost didn't exist?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Libera creatividad, establece el "north star".</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Puede generar soluciones completamente impracticas. No guia el regreso a la realidad.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">FASE 1: DISENO IDEAL (sin restricciones)
+Imagina recursos ilimitados: presupuesto infinito, el mejor talento, tiempo suficiente.
+Cual seria la solucion PERFECTA para [PROBLEMA]?
+Describe en detalle: tecnologia, procesos, personas, experiencia del usuario.
+
+FASE 2: EXTRACCION DE PRINCIPIOS
+De esa solucion ideal, cuales son los PRINCIPIOS que la hacen excelente?
+(No las tacticas especificas, sino los principios subyacentes)
+
+FASE 3: APLICACION CON RESTRICCIONES
+Ahora, con presupuesto de [X], equipo de [Y], y plazo de [Z]:
+Como aplicamos esos principios de la manera mas fiel posible?
+
+FASE 4: VERSION MINIMA VIABLE
+Cual es la version mas pequena que aun honra los principios core?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">EJERCICIO DE "MOONSHOT → MVP" PARA CLIENTE [NOMBRE]
+
+CONTEXTO: El cliente quiere [OBJETIVO] en [INDUSTRIA].
+
+FASE 1: VISION SIN LIMITES
+Si el cliente tuviera:
+- Presupuesto ilimitado
+- Los mejores ingenieros de IA del mundo
+- Acceso a cualquier dato
+- 5 anos para implementar
+- Cero resistencia organizacional
+
+Como seria la solucion PERFECTA de GenAI para su problema?
+Describe:
+- Arquitectura tecnica ideal
+- Experiencia del usuario/empleado
+- Integracion con sistemas
+- Capacidades de IA (que haria la IA exactamente)
+- Metricas de exito en el escenario ideal
+
+FASE 2: PRINCIPIOS EXTRAIDOS
+De esa vision, identifica los 5 principios no-negociables que hacen que funcione:
+1. [Principio]: [Por que es critico]
+2. ...
+
+FASE 3: DISENO REALISTA CON PRESUPUESTO MAINDSET
+Restricciones reales del cliente:
+- Presupuesto: [X]
+- Timeline: [Y meses]
+- Equipo disponible: [Z]
+- Sistemas legacy: [lista]
+- Madurez digital: [nivel]
+
+Como disenamos una solucion que honre los principios dentro de estas restricciones?
+
+FASE 4: PILOTO EXPLORA (3 meses)
+Cual es el MVP de 3 meses que:
+- Demuestra el valor core
+- Genera quick wins visibles
+- Construye momentum organizacional
+- Sienta bases para escalar?
+
+Incluye: alcance, entregables, metricas de exito, recursos necesarios.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 5 -->
+        <div class="prompt-card" id="prompt-5">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">5</span>
+              Eliminacion del 90%
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "If I were forced to cut 90 percent of this, what would remain?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Fuerza priorizacion brutal, revela esencia.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>El 90% es arbitrario. No ayuda a decidir QUE cortar.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">EJERCICIO DE ESENCIALISMO EXTREMO
+
+Para [PROYECTO/PRODUCTO/ESTRATEGIA]:
+
+1. INVENTARIO COMPLETO
+   Lista TODOS los componentes, features, actividades, recursos actuales.
+
+2. PRUEBA DE ELIMINACION INDIVIDUAL
+   Para cada elemento pregunta: "Si esto desapareciera manana, que pasaria?"
+   Clasifica:
+   - FATAL: El proyecto/producto fracasa sin esto
+   - DOLOROSO: Funcionaria pero significativamente peor
+   - INCOMODO: Notariamos la falta pero sobreviviriamos
+   - INVISIBLE: Nadie notaria la diferencia
+
+3. EL 10% ESENCIAL
+   Si solo pudieras mantener [N elementos = 10% del total], cuales serian?
+   Por que exactamente estos?
+
+4. RECONFIGURACION
+   Con solo ese 10%, como redisenarias el resto del sistema?
+   A menudo, eliminar el 90% revela un diseno mas elegante.</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">PRIORIZACION BRUTAL PARA PROYECTO GENAI EN [CLIENTE]
+
+El cliente quiere implementar multiples casos de uso de GenAI:
+[LISTA DE CASOS DE USO PROPUESTOS]
+
+EJERCICIO DE LOS "POCOS VITALES":
+
+1. MATRIZ DE EVALUACION
+   | Caso de Uso | Impacto en Negocio (1-10) | Factibilidad Tecnica (1-10) | Velocidad de Implementacion (1-10) | Visibilidad (1-10) | SCORE |
+   |-------------|---------------------------|-----------------------------|------------------------------------|-------------------|-------|
+
+2. PRUEBA DEL "UNICO"
+   Si SOLO pudieras implementar UN caso de uso en los proximos 6 meses, cual seria?
+   Justifica considerando:
+   - Cual demuestra el valor transformador de GenAI mas claramente?
+   - Cual genera mas traccion interna para futuros proyectos?
+   - Cual tiene el mejor ratio esfuerzo/impacto?
+
+3. LA SECUENCIA MINIMA
+   Cuales son los 2-3 casos de uso que, implementados en secuencia correcta,
+   desbloquean el mayor valor con el menor esfuerzo acumulado?
+
+   Explica las dependencias y sinergias.
+
+4. PROPUESTA "SPRINT ZERO"
+   Para el primer sprint de 4 semanas en programa EXPLORA:
+   - Alcance ultra-enfocado: [descripcion]
+   - Metrica de exito unica: [KPI especifico]
+   - Entregable tangible: [que vera el cliente]
+
+   Como este micro-exito pavimenta el camino para todo lo demas?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 6 -->
+        <div class="prompt-card" id="prompt-6">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">6</span>
+              Analisis de Causa Raiz del Fracaso
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "If this failed completely, what would be the root cause?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Pre-mortem thinking, identifica riesgos antes de que ocurran.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Solo pide UNA causa raiz. Los fracasos suelen ser multicausales.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">PRE-MORTEM ESTRUCTURADO
+
+Imagina que es [FECHA FUTURA]. El proyecto [NOMBRE] ha fracasado completamente.
+
+1. ESCENARIOS DE FRACASO
+   Describe 3 formas diferentes en que podria haber fracasado:
+   - Fracaso tecnico: [descripcion]
+   - Fracaso de adopcion: [descripcion]
+   - Fracaso estrategico: [descripcion]
+
+2. AUTOPSIA RETROSPECTIVA (para cada escenario)
+   - Cual fue el momento decisivo donde todo empezo a ir mal?
+   - Que senales de alerta ignoramos?
+   - Que suposicion critica resulto ser falsa?
+   - Que dependencia externa fallo?
+
+3. PROBABILIDADES Y SEVERIDAD
+   | Modo de Fracaso | Probabilidad (%) | Severidad (1-10) | Score de Riesgo |
+   |-----------------|------------------|------------------|-----------------|
+
+4. CONTROLES PREVENTIVOS
+   Para los top 3 riesgos, que acciones especificas tomariamos HOY para prevenirlos?
+
+5. INDICADORES TEMPRANOS
+   Que metricas o senales monitoreamos para detectar problemas antes de que sean fatales?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">PRE-MORTEM: IMPLEMENTACION GENAI EN [CLIENTE]
+
+Es [FECHA + 12 MESES]. El proyecto de IA Generativa con [CLIENTE] ha fracasado.
+El sponsor esta furioso, nos han sacado del proyecto, y la organizacion
+ha vuelto a sus metodos anteriores declarando que "la IA no funciona aqui".
+
+AUTOPSIA FICTICIA:
+
+1. MODOS DE FRACASO PLAUSIBLES
+
+   A) FRACASO TECNICO
+   - El modelo alucinaba demasiado / outputs de baja calidad
+   - La integracion con sistemas legacy nunca funciono bien
+   - Los datos del cliente eran insuficientes o de mala calidad
+   - Performance inaceptable (latencia, costos de API)
+
+   B) FRACASO DE ADOPCION
+   - Los usuarios nunca adoptaron la herramienta
+   - Resistencia activa del middle management
+   - Falta de training adecuado
+   - La herramienta no encajaba en los flujos de trabajo reales
+
+   C) FRACASO ESTRATEGICO
+   - El caso de uso elegido no era prioritario para el negocio
+   - El sponsor perdio interes/fue reemplazado
+   - Cambio de prioridades organizacionales
+   - ROI no demostrado en tiempo esperado
+
+   D) FRACASO DE GESTION
+   - Scope creep descontrolado
+   - Falta de governance de IA
+   - Incidente de seguridad/privacidad
+   - Expectativas mal gestionadas
+
+2. ANALISIS DE RIESGO
+   | Riesgo | Probabilidad | Impacto | En Nuestro Control | Mitigacion |
+   |--------|-------------|---------|-------------------|------------|
+
+3. SENALES DE ALERTA TEMPRANA
+   Define los "canarios en la mina" que monitoreamos semanalmente:
+   - Metricas de adopcion: [especificas]
+   - Metricas de calidad: [especificas]
+   - Metricas de satisfaccion: [especificas]
+   - Metricas de engagement del sponsor: [especificas]
+
+4. PLAN DE CONTINGENCIA
+   Si detectamos [SENAL], activamos [ACCION] inmediatamente.
+
+5. DISENO ANTI-FRAGIL
+   Como disenamos el proyecto para que pequenos fracasos nos hagan mas fuertes?
+   (Fail fast, learn faster)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 7 -->
+        <div class="prompt-card" id="prompt-7">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">7</span>
+              Ignorar Normas de la Industria
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What would a solution look like if I ignored industry norms?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Promueve innovacion disruptiva, pensamiento lateral.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Ignorar normas puede ser peligroso (compliance, seguridad). Necesita balance.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">EJERCICIO DE "OUTSIDER THINKING"
+
+Para [PROBLEMA EN INDUSTRIA X]:
+
+1. NORMAS EXPLICITAS
+   Lista las reglas formales de la industria:
+   - Regulaciones legales (no negociables)
+   - Estandares de la industria (convenciones, no leyes)
+   - "Best practices" (sabiduria convencional)
+
+2. NORMAS IMPLICITAS
+   Que hacen TODOS en la industria sin cuestionar?
+   - Modelos de negocio tipicos
+   - Estructuras organizacionales comunes
+   - Tecnologias "estandar"
+   - Formas de relacionarse con clientes
+
+3. LENTES DE OTRAS INDUSTRIAS
+   Como resolveria este problema...
+   - Una empresa de software? (iteracion rapida, datos)
+   - Amazon? (obsesion por cliente, eficiencia)
+   - Una startup? (recursos limitados, velocidad)
+   - Un competidor de pais emergente? (frugalidad, adaptabilidad)
+
+4. SOLUCION "HEREJE"
+   Combinando insights de otras industrias y cuestionando normas implicitas,
+   cual seria una solucion radicalmente diferente?
+
+5. VALIDACION PRAGMATICA
+   De esa solucion hereje, que elementos son:
+   - Implementables inmediatamente?
+   - Implementables con cambios moderados?
+   - Demasiado disruptivos (guardar para el futuro)?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">DISRUPCION CONTROLADA EN [INDUSTRIA DEL CLIENTE]
+
+El cliente opera en [INDUSTRIA] donde "siempre se ha hecho asi":
+[LISTA DE NORMAS Y CONVENCIONES DE LA INDUSTRIA]
+
+EJERCICIO DE INNOVACION RADICAL:
+
+1. CLASIFICACION DE NORMAS
+   | Norma | Tipo | Por que existe? | Sigue siendo valida? |
+   |-------|------|-----------------|----------------------|
+   | [norma] | Legal/Convencion/Tradicion | [razon original] | [analisis] |
+
+2. IMPORTACION INTER-INDUSTRIA
+   Que estan haciendo otras industrias que podrian aplicarse aqui?
+
+   TECH/FINTECH:
+   - Automatizacion de decisiones con IA
+   - Interfaces conversacionales
+   - Personalizacion masiva
+
+   RETAIL:
+   - Omnicanalidad
+   - Prediccion de demanda
+   - Experiencia sin friccion
+
+   MANUFACTURA AVANZADA:
+   - Gemelos digitales
+   - Mantenimiento predictivo
+   - Supply chain inteligente
+
+3. ESCENARIO "SI AMAZON ENTRARA A ESTA INDUSTRIA"
+   Como redisenarian todo el modelo usando GenAI desde cero?
+   Que eliminarian? Que automatizarian? Que personalizarian?
+
+4. OPORTUNIDADES DE "CATEGORY DESIGN"
+   Hay alguna forma de redefinir la categoria en la que compite el cliente?
+   Puede GenAI ser el enabler de una nueva propuesta de valor?
+
+5. ROADMAP DE INNOVACION GRADUADA
+   | Horizonte | Innovacion | Riesgo | Dependencias |
+   |-----------|-----------|--------|--------------|
+   | H1 (0-6m) | Optimizacion dentro de normas | Bajo | |
+   | H2 (6-18m) | Desafio de convenciones | Medio | |
+   | H3 (18m+) | Redefinicion de categoria | Alto | |</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 8 -->
+        <div class="prompt-card" id="prompt-8">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">8</span>
+              Imposible vs. Se Siente Imposible
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What part of this is actually impossible and what part just feels impossible?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Separa limitaciones reales de barreras psicologicas.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>No ofrece framework para distinguir una de otra.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">ANALISIS DE BARRERAS REALES VS. PERCIBIDAS
+
+Para lograr [OBJETIVO]:
+
+1. LISTA DE "IMPOSIBLES"
+   Enumera todo lo que se ha dicho que es imposible o muy dificil.
+
+2. CLASIFICACION RIGUROSA
+   Para cada "imposible":
+
+   | Barrera | Viola leyes de fisica/matematicas? | Viola regulaciones legales? | Es limitacion tecnica actual? | Es convencion/tradicion? | Es miedo/incertidumbre? |
+
+3. PRUEBA DE EVIDENCIA
+   Para barreras no-fisicas, pregunta:
+   - Alguien mas lo ha hecho? Donde?
+   - Que tendria que ser verdad para que funcione?
+   - Cual es la peor consecuencia realista de intentarlo?
+
+4. REENCUADRE
+   Convierte "Es imposible porque X" en "Seria posible si Y"
+
+5. PLAN DE ATAQUE
+   Para las barreras que son "solo dificiles", cual es el primer paso?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">DIAGNOSTICO DE BARRERAS: ADOPCION GENAI EN [CLIENTE]
+
+El cliente dice que NO PUEDEN:
+[LISTA DE OBJECIONES Y "IMPOSIBLES" DEL CLIENTE]
+
+ANALISIS DE REALIDAD:
+
+1. MATRIZ DE CLASIFICACION
+   | "Imposible" Declarado | Evidencia Contraria | Verdadera Naturaleza | Solucion Potencial |
+   |-----------------------|---------------------|---------------------|-------------------|
+   | "Nuestros datos son muy sensibles para IA" | [empresas similares que lo hacen] | Miedo + Desconocimiento tecnico | [solucion: arquitectura on-premise, anonimizacion, etc.] |
+   | "Nuestros empleados nunca adoptaran esto" | [casos de exito de change management] | Resistencia al cambio | [solucion: programa de champions, quick wins visibles] |
+
+2. CATEGORIAS DE BARRERAS
+
+   REALMENTE IMPOSIBLES (por ahora):
+   - [lista con explicacion tecnica/legal]
+
+   DIFICILES PERO RESOLUBLES:
+   - [barrera]: requiere [solucion] con inversion de [recursos]
+
+   SOLO PARECEN IMPOSIBLES:
+   - [barrera]: es miedo a [X], evidencia contraria: [Y]
+
+3. REENCUADRE ESTRATEGICO
+   Prepara argumentos para convertir cada objecion en oportunidad:
+
+   OBJECION: "No tenemos los datos"
+   REENCUADRE: "GenAI puede trabajar con los datos que tienen, y el proceso de
+   implementacion mejorara su data governance"
+
+   OBJECION: "Es muy caro"
+   REENCUADRE: "El costo de NO adoptar es mayor - veamos el calculo de costo de oportunidad"
+
+4. QUICK WINS PARA ROMPER EL HIELO
+   Cual es el piloto de menor riesgo que demuestra que lo "imposible" es posible?
+
+   Objetivo: Generar un exito visible en [X semanas] que cambie la narrativa interna.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 9 -->
+        <div class="prompt-card" id="prompt-9">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">9</span>
+              Minimum Viable Breakthrough
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What is the minimum viable breakthrough?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Brillante reencuadre de MVP hacia impacto transformador.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>No define que hace a algo un "breakthrough" vs. solo una mejora.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">DISENO DEL MINIMUM VIABLE BREAKTHROUGH
+
+Para [OBJETIVO/AREA]:
+
+1. DEFINICION DE "BREAKTHROUGH"
+   Un breakthrough no es una mejora incremental. Es algo que:
+   - Cambia la conversacion ("esto cambia todo")
+   - Crea nuevo espacio de posibilidades
+   - Es dificil de ignorar una vez visto
+   - Genera momentum propio
+
+   Que breakthrough especifico buscamos?
+
+2. CONDICIONES MINIMAS
+   Cuales son los requisitos MINIMOS para que esto califique como breakthrough?
+   - Que metrica debe moverse y cuanto?
+   - Quien debe verlo/experimentarlo?
+   - Que debe demostrar?
+
+3. DISENO REVERSO
+   Partiendo del breakthrough deseado, cual es el camino mas corto para llegar ahi?
+   Elimina todo lo que no sea estrictamente necesario.
+
+4. PRUEBA DE SUFICIENCIA
+   Este MVB sera suficiente para:
+   - Conseguir el siguiente nivel de recursos/apoyo?
+   - Cambiar la percepcion de stakeholders clave?
+   - Crear "prueba de concepto" para escalar?
+
+5. TIMELINE AGRESIVO
+   Como logramos este breakthrough en la mitad del tiempo que parece razonable?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">DISENO DE "BREAKTHROUGH MOMENT" PARA [CLIENTE]
+
+El cliente esta en fase de Assessment. Necesitamos un breakthrough que:
+- Demuestre el poder de GenAI de forma visceral
+- Convierta escepticos en creyentes
+- Justifique inversion en fase de Ejecucion
+- Sea replicable en otras areas
+
+FRAMEWORK DE BREAKTHROUGH:
+
+1. ANATOMIA DEL BREAKTHROUGH PERFECTO
+   Para este cliente especifico, el breakthrough ideal seria:
+
+   "Cuando [PERSONA/ROL] vea que [RESULTADO ESPECIFICO]
+   en [TIMEFRAME SORPRENDENTE], dira 'wow, esto cambia todo
+   porque [IMPLICACION PARA SU TRABAJO/NEGOCIO]'"
+
+   Completa esta frase para 3 stakeholders clave.
+
+2. CANDIDATOS A BREAKTHROUGH
+   | Caso de Uso | "Momento Wow" | Esfuerzo | Visibilidad | Score |
+   |-------------|---------------|----------|-------------|-------|
+   | [caso 1] | "La IA escribio el reporte en 5 min en vez de 2 dias" | [x] | [x] | [x] |
+
+3. DISENO DEL PILOTO BREAKTHROUGH
+   Alcance ultra-enfocado: [descripcion precisa]
+
+   Condiciones de exito (medibles):
+   - Metrica 1: [baseline] → [target]
+   - Metrica 2: [baseline] → [target]
+
+   Audiencia del breakthrough:
+   - Quien lo experimenta directamente?
+   - Quien recibe el "reporte de exito"?
+   - Como documentamos/comunicamos?
+
+4. TIMELINE SPRINT
+   Semana 1: [actividades]
+   Semana 2: [actividades]
+   Semana 3: [actividades]
+   Semana 4: BREAKTHROUGH DEMO
+
+5. AMPLIFICACION POST-BREAKTHROUGH
+   Una vez logrado, como convertimos este exito en:
+   - Mandato para expandir?
+   - Caso de estudio interno?
+   - Cambio de narrativa organizacional sobre IA?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 10 -->
+        <div class="prompt-card" id="prompt-10">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">10</span>
+              Reinicio con Conocimiento Actual
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "If I restarted this entire project today, knowing what I know now, what would I build?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Poderoso para eliminar legacy debt, fomenta honestidad brutal.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Puede ser frustrante sin capacidad de actuar. Necesita mecanismo de aplicacion.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">EJERCICIO DE "BORRAR Y EMPEZAR"
+
+Para [PROYECTO/PRODUCTO/SISTEMA]:
+
+1. INVENTARIO DE APRENDIZAJES
+   Que se ahora que no sabia cuando empezamos?
+   - Sobre el problema real
+   - Sobre los usuarios/stakeholders
+   - Sobre la tecnologia
+   - Sobre la organizacion
+   - Sobre lo que realmente importa
+
+2. DISENO "DIA UNO"
+   Si empezara HOY con ese conocimiento y recursos actuales:
+   - Que haria EXACTAMENTE IGUAL?
+   - Que haria COMPLETAMENTE DIFERENTE?
+   - Que NO HARIA en absoluto?
+   - Que NUEVAS cosas incluiria?
+
+3. BRECHA: ACTUAL VS. IDEAL
+   | Aspecto | Estado Actual | Estado "Dia Uno" | Brecha | Costo de Cerrarla |
+   |---------|---------------|------------------|--------|-------------------|
+
+4. PLAN DE CONVERGENCIA
+   No podemos borrar y empezar, pero podemos converger gradualmente.
+   Cuales son los cambios de mayor impacto que podemos hacer?
+   Prioriza por: Impacto x Factibilidad x Urgencia
+
+5. PREVENCION FUTURA
+   Que procesos establecemos para capturar estos aprendizajes en tiempo real,
+   no solo en retrospectiva?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">RETROSPECTIVA ESTRATEGICA: PROYECTOS GENAI PASADOS
+
+Reflexionando sobre proyectos anteriores de MAindset con clientes similares:
+
+1. INVENTARIO DE LECCIONES APRENDIDAS
+
+   SOBRE EL PROBLEMA:
+   - Lo que los clientes dicen que quieren vs. lo que realmente necesitan
+   - Casos de uso que parecian prometedores pero no funcionaron
+   - Casos de uso que subestimamos y fueron home runs
+
+   SOBRE ADOPCION:
+   - Que funciono para change management
+   - Que resistencias subestimamos
+   - Quienes fueron los mejores champions internos
+
+   SOBRE TECNOLOGIA:
+   - Que herramientas/modelos funcionaron mejor
+   - Donde la complejidad tecnica nos sorprendio
+   - Que integraciones fueron mas dificiles
+
+   SOBRE GESTION:
+   - Que estructura de proyecto funciono
+   - Como mantener momentum del sponsor
+   - Cuando y como escalar
+
+2. REDISENO DE METODOLOGIA MAINDSET
+   Conociendo todo esto, como redisenariamos nuestro approach?
+
+   ASSESSMENT: Que preguntas hariamos diferente?
+   EJECUCION: Que estructura de sprints funciona mejor?
+   EXPANSION: Como asegurar sostenibilidad?
+
+3. PLAYBOOK PARA [CLIENTE NUEVO]
+   Aplicando todas las lecciones, disena el engagement ideal:
+   - Semana 1-2: [actividades especificas]
+   - Mes 1: [entregables]
+   - Mes 2-3: [siguiente fase]
+
+   Red flags a monitorear: [lista]
+   Intervenciones si vemos red flags: [protocolos]
+
+4. TEMPLATE DE "LESSONS LEARNED"
+   Como capturamos sistematicamente estos aprendizajes en cada proyecto
+   para mejorar continuamente?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 11 -->
+        <div class="prompt-card" id="prompt-11">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">11</span>
+              Restricciones Ocultas No Cuestionadas
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What are the hidden constraints I'm not questioning?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Meta-cognitivo, busca puntos ciegos.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Dificil responder honestamente (si supiera cuales son, no serian ocultas).</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">CACERIA DE RESTRICCIONES INVISIBLES
+
+Para [SITUACION]:
+
+1. RESTRICCIONES VISIBLES (las que mencionamos)
+   Lista todas las limitaciones que conscientemente consideramos.
+
+2. AUDITORIA DE CATEGORIAS OCULTAS
+   Revisa sistematicamente cada categoria buscando restricciones no mencionadas:
+
+   - TIEMPO: Hay deadlines arbitrarios? Por que esas fechas especificas?
+   - PRESUPUESTO: Por que ese numero exacto? Es fijo o negociable?
+   - PERSONAS: Quien "debe" estar involucrado? Por que?
+   - TECNOLOGIA: Que herramientas asumimos que debemos usar?
+   - PROCESO: Que pasos asumimos son obligatorios?
+   - ORGANIZACION: Que jerarquias/aprobaciones asumimos necesarias?
+   - MERCADO: Que asumimos sobre clientes/competencia?
+   - IDENTIDAD: Que asumimos sobre "quienes somos" y "que hacemos"?
+
+3. TEST DE ORIGEN
+   Para cada restriccion, pregunta:
+   - Cuando se establecio esta restriccion?
+   - Por quien y por que razon?
+   - Sigue siendo valida esa razon?
+   - Que pasaria si la violaramos?
+
+4. LIBERACION EXPERIMENTAL
+   Elige 3 restricciones que podrian no ser reales.
+   Como probariamos si realmente aplican?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">AUDITORIA DE RESTRICCIONES AUTOIMPUESTAS EN [CLIENTE]
+
+El cliente ha definido el alcance del proyecto con estas restricciones:
+[LISTA DE RESTRICCIONES DECLARADAS]
+
+CACERIA SISTEMATICA DE LIMITES INVISIBLES:
+
+1. RESTRICCIONES EXPLICITAS
+   | Restriccion | Origen | Cuestionable? |
+   |-------------|--------|---------------|
+
+2. AUDITORIA POR CATEGORIA
+
+   PERSONAS:
+   - "No podemos involucrar a [departamento/rol]" - Por que?
+   - "El CEO/CFO nunca aprobara X" - Lo han preguntado?
+   - "Los usuarios nunca adoptaran" - Basado en que evidencia?
+
+   DATOS:
+   - "No tenemos acceso a esos datos" - Es tecnico, politico o legal?
+   - "Nuestros datos son muy desordenados" - Comparado con que benchmark?
+   - "Es informacion sensible" - Que nivel de sensibilidad exactamente?
+
+   TIEMPO:
+   - "Necesitamos resultados en [X meses]" - Por que ese plazo?
+   - "No podemos empezar hasta [evento]" - Es real o zona de comfort?
+
+   PRESUPUESTO:
+   - "Solo tenemos [X] para esto" - De donde sale ese numero?
+   - "No podemos pagar [herramienta/servicio]" - Han visto el ROI?
+
+   TECNOLOGIA:
+   - "Debemos usar [sistema existente]" - Es realmente obligatorio?
+   - "IT no aprobara [solucion]" - Han presentado el caso?
+
+   CULTURA:
+   - "Aqui las cosas se hacen de [manera]" - Siempre ha sido asi?
+   - "La gerencia es conservadora" - Todos o algunos? En todo?
+
+3. TOP 5 RESTRICCIONES CUESTIONABLES
+   Las restricciones que mas limitan y que podrian no ser reales:
+
+   | Restriccion | Por que creemos que es cuestionable | Como probariamos | Upside si se elimina |
+   |-------------|-------------------------------------|------------------|---------------------|
+
+4. PLAN DE DESAFIO ESTRATEGICO
+   Para cada restriccion cuestionable:
+   - Quien tiene autoridad para levantarla?
+   - Que evidencia necesitamos para convencer?
+   - Como lo enmarcamos politicamente?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 12 -->
+        <div class="prompt-card" id="prompt-12">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">12</span>
+              Solo Fisica, No Politica
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "How would I solve this if I only cared about physics, not politics?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Clarifica la solucion tecnicamente optima antes de compromisos.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Ignorar politica completamente es ingenuo. Necesita reconexion con realidad.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">SOLUCION TECNICA PURA → IMPLEMENTACION POLITICA
+
+FASE 1: SOLUCION "SOLO FISICA"
+Ignorando completamente:
+- Egos y territorios
+- Procesos burocraticos
+- Historia y precedentes
+- Jerarquias y politicas
+- "Como se vera"
+
+Cual es la solucion tecnicamente optima para [PROBLEMA]?
+Describe: arquitectura, flujos, recursos, timeline ideal.
+
+FASE 2: MAPA POLITICO
+Ahora identifica todos los factores politicos:
+- Quien gana/pierde con la solucion optima?
+- Que territorios invade?
+- Que precedentes desafia?
+- Quien debe aprobar/apoyar?
+
+FASE 3: PUNTOS DE FRICCION
+Donde choca la solucion optima con la realidad politica?
+| Aspecto de Solucion | Friccion Politica | Severidad |
+
+FASE 4: DISENO POLITICO
+Para cada friccion, disena la estrategia:
+- Como reencuadramos para alinear incentivos?
+- Que concesiones menores preservan el core?
+- Como construimos coalicion de apoyo?
+- Que quick wins generan credibilidad?
+
+FASE 5: SOLUCION VIABLE
+Sintetiza: Solucion que es 80%+ optima pero 100% implementable.</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">DISENO SIN FRICCION → IMPLEMENTACION CON POLITICA
+
+CONTEXTO: Proyecto GenAI en [CLIENTE], area [X]
+
+FASE 1: ARQUITECTURA TECNICAMENTE OPTIMA
+Si pudieras disenar la solucion perfecta sin considerar:
+- Quien "posee" que sistemas
+- Que departamento lidera
+- Presupuestos departamentales
+- Resistencias individuales
+- Procesos de aprobacion
+- "Como siempre se ha hecho"
+
+Como seria la implementacion ideal de GenAI?
+
+Describe:
+- Arquitectura tecnica
+- Flujos de datos
+- Roles y responsabilidades
+- Estructura de equipo
+- Timeline optimo
+- Stack tecnologico
+
+FASE 2: RADIOGRAFIA POLITICA DEL CLIENTE
+Mapea el landscape politico:
+
+| Stakeholder | Poder | Interes en Proyecto | Gana/Pierde con Exito | Concerns |
+|-------------|-------|--------------------|-----------------------|----------|
+
+Territorios en juego:
+- Que departamento "posee" la IA?
+- Quien controla los datos necesarios?
+- Quien se ve amenazado por la automatizacion?
+- Que proyectos compiten por recursos?
+
+FASE 3: PUNTOS DE COLISION
+| Solucion Optima | Realidad Politica | Riesgo | Estrategia |
+|-----------------|-------------------|--------|-----------|
+
+FASE 4: DISENO POLITICAMENTE INTELIGENTE
+Redisena la solucion para que:
+- Cada stakeholder clave gane algo visible
+- Nadie se sienta amenazado (al menos no inmediatamente)
+- El proyecto tenga multiples "padres"
+- Los quick wins beneficien a quienes pueden bloquearlo
+
+FASE 5: PLAN DE IMPLEMENTACION VIABLE
+Semana 1-2: Quick wins para credibilidad
+Mes 1: Consolidar coalicion
+Mes 2-3: Expandir gradualmente
+Indicadores de resistencia y contramedidas.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 13 -->
+        <div class="prompt-card" id="prompt-13">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">13</span>
+              10x Mas Rapido
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "If I had to achieve this 10 times faster, what would I do?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Fuerza innovacion radical en proceso, elimina lo no esencial.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>10x puede ser tan extremo que parece irrelevante. Necesita gradaciones.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">EJERCICIO DE COMPRESION TEMPORAL
+
+Para lograr [OBJETIVO] actualmente planificado en [TIEMPO]:
+
+1. ANALISIS 10X
+   Si tuvieras que lograrlo en [TIEMPO / 10]:
+   - Que eliminarias completamente?
+   - Que harias en paralelo en vez de secuencial?
+   - Que automatizarias a cualquier costo?
+   - Que delegarias aunque perdieras algo de control?
+   - Que perfeccion sacrificarias?
+
+2. ANALISIS 2X (mas realista)
+   Si tuvieras que lograrlo en [TIEMPO / 2]:
+   - Cuales son los cambios de mayor impacto del ejercicio 10X que SI puedes hacer?
+
+3. IDENTIFICACION DE DESPERDICIOS
+   Que tiempo se "pierde" actualmente en:
+   - Esperas y aprobaciones
+   - Reuniones y coordinacion
+   - Retrabajo por falta de claridad
+   - Scope creep
+   - Perfeccionismo prematuro
+
+4. REDISENO DE PROCESO
+   Con los insights anteriores, cual es el proceso optimo?
+   | Actividad | Tiempo Actual | Tiempo Optimo | Como |
+   |-----------|---------------|---------------|------|
+
+5. COMPROMISOS NECESARIOS
+   Que trade-offs aceptamos para ganar velocidad?
+   (Calidad, features, cobertura, etc.)</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">ACELERACION DE PROYECTO GENAI: [CLIENTE]
+
+Timeline actual del proyecto: [X meses]
+Objetivo: Explorar como lograrlo en [X/2] o menos
+
+EJERCICIO DE COMPRESION:
+
+1. ANALISIS EXTREMO (10X)
+   Si tuvieramos que entregar valor en [X/10] del tiempo:
+
+   ELIMINAR:
+   - Que fases son realmente necesarias vs. "nice to have"?
+   - Que documentacion podemos reducir radicalmente?
+   - Que casos de uso eliminamos para enfocarnos?
+
+   PARALELIZAR:
+   - Que actividades asumimos secuenciales pero podrian ser paralelas?
+   - Podemos hacer assessment y piloto simultaneamente?
+   - Podemos hacer training mientras implementamos?
+
+   AUTOMATIZAR:
+   - Que pasos manuales podemos automatizar?
+   - Que herramientas acelerarian el desarrollo?
+   - Podemos usar templates/aceleradores de proyectos previos?
+
+   PRE-CONSTRUIR:
+   - Que componentes podemos reutilizar de proyectos anteriores?
+   - Que soluciones pre-construidas existen (APIs, herramientas no-code)?
+
+2. MAPA DE DESPERDICIOS EN PROYECTOS TIPICOS
+   | Desperdicio | Causa Raiz | Tiempo Perdido | Solucion |
+   |-------------|-----------|----------------|----------|
+   | Espera por aprobaciones | [causa] | [X dias] | [solucion] |
+   | Reuniones de alineamiento | [causa] | [X horas/semana] | [solucion] |
+   | Iteraciones por falta de claridad | [causa] | [X dias] | [solucion] |
+
+3. PROPUESTA DE SPRINT INTENSIVO
+   Disena un "hackathon" de [2-4 semanas] que entregue:
+   - Setup: [lo que preparamos antes]
+   - Semana 1: [actividades intensivas]
+   - Semana 2: [actividades intensivas]
+   - Entregable final: [descripcion]
+
+   Requisitos:
+   - Acceso directo a decisores (sin cadena de aprobacion)
+   - Equipo dedicado full-time
+   - Datos y sistemas accesibles
+   - Espacio fisico/virtual dedicado
+
+4. VERSION PRAGMATICA (2X)
+   Si el timeline actual es [X meses], como lo hacemos en [X/2]?
+
+   | Fase | Timeline Actual | Timeline 2X | Que Cambia |
+   |------|-----------------|-------------|------------|</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 14 -->
+        <div class="prompt-card" id="prompt-14">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">14</span>
+              Escala a Millones
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "What would this look like if it had to scale to millions?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Previene decisiones que limitan crecimiento futuro.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>No todo necesita escalar. Puede sobre-ingenieria prematura.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">DISENO PARA ESCALA
+
+Para [SOLUCION]:
+
+1. ESCALA ACTUAL Y PROYECTADA
+   | Metrica | Hoy | 10X | 100X | 1000X |
+   |---------|-----|-----|------|-------|
+   | Usuarios | | | | |
+   | Transacciones | | | | |
+   | Datos | | | | |
+   | Ingresos | | | | |
+
+2. ANALISIS DE QUIEBRES
+   Para cada orden de magnitud, que se rompe?
+   - Tecnicamente (performance, arquitectura)
+   - Operativamente (procesos, equipo)
+   - Economicamente (costos, pricing)
+   - Organizativamente (governance, control)
+
+3. DECISIONES DE HOY QUE AFECTAN MANANA
+   Que decisiones actuales limitaran escala futura?
+   Cuales son faciles de cambiar despues vs. dificiles?
+
+4. DISENO "ESCALA AGNOSTICA"
+   Como disenamos para que la escala sea un problema de recursos,
+   no de arquitectura?
+
+5. BALANCE PRAGMATICO
+   Que sobre-ingenieria para escala no vale la pena ahora?
+   Que inversion minima previene deuda tecnica grave?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">DISENO ESCALABLE DE SOLUCION GENAI PARA [CLIENTE]
+
+El piloto actual involucra [X usuarios/procesos/documentos].
+Si tiene exito, podria expandirse a [toda la organizacion / multiples paises / etc.]
+
+ANALISIS DE ESCALABILIDAD:
+
+1. PROYECCION DE ESCALA
+   | Dimension | Piloto | Fase 2 | Full Rollout | Comentarios |
+   |-----------|--------|--------|--------------|-------------|
+   | Usuarios | [X] | [Y] | [Z] | |
+   | Llamadas API/mes | [X] | [Y] | [Z] | |
+   | Documentos procesados | [X] | [Y] | [Z] | |
+   | Idiomas/paises | [X] | [Y] | [Z] | |
+   | Casos de uso | [X] | [Y] | [Z] | |
+
+2. PUNTOS DE QUIEBRE POR ESCALA
+
+   TECNICOS:
+   - La arquitectura actual soporta [Y] usuarios?
+   - Los costos de API escalan linealmente o exponencialmente?
+   - Hay limites de rate limiting, tokens, etc.?
+   - La infraestructura del cliente aguanta?
+
+   OPERATIVOS:
+   - Quien soporta a [Z] usuarios? Como?
+   - Como se mantiene/actualiza el sistema?
+   - Como se maneja el feedback/mejora continua?
+
+   ORGANIZATIVOS:
+   - Quien gobierna la IA a escala?
+   - Como se manejan politicas y compliance?
+   - Como se coordinan multiples equipos/regiones?
+
+   ECONOMICOS:
+   - El modelo de costos funciona a escala?
+   - El ROI mejora o empeora con la escala?
+
+3. DECISIONES ARQUITECTONICAS CRITICAS
+   Decisiones de hoy que debemos acertar para no bloquear escala futura:
+
+   | Decision | Opcion A | Opcion B | Impacto en Escala |
+   |----------|----------|----------|-------------------|
+   | Modelo (API vs. on-premise) | | | |
+   | Datos (centralizado vs. federado) | | | |
+   | Plataforma (custom vs. SaaS) | | | |
+
+4. RECOMENDACION DE ARQUITECTURA EVOLUTIVA
+   Fase 1 (Piloto): [arquitectura simple]
+   - Justificacion: [velocidad, aprendizaje]
+
+   Fase 2 (Expansion): [migrar a X]
+   - Trigger para migrar: [criterios especificos]
+
+   Fase 3 (Enterprise): [arquitectura final]
+   - Preparacion necesaria: [inversiones, decisiones]
+
+5. QUICK WINS QUE NO COMPROMETEN ESCALA
+   Como movemos rapido sin crear deuda tecnica?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 15 -->
+        <div class="prompt-card" id="prompt-15">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">15</span>
+              Maximo Leverage
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "Which part of this solution creates the most leverage?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Enfoca en el punto de maximo apalancamiento, eficiencia estrategica.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>No define que significa "leverage" en el contexto especifico.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">ANALISIS DE LEVERAGE
+
+Para [SOLUCION/PROYECTO]:
+
+1. DEFINIR TIPOS DE LEVERAGE
+   En este contexto, leverage puede significar:
+   - MULTIPLICADOR DE ESFUERZO: 1 hora de trabajo → X horas de resultado
+   - EFECTO DOMINO: Este cambio desbloquea otros cambios
+   - VISIBILIDAD: Este exito atrae recursos/apoyo para mas exitos
+   - APRENDIZAJE: Este experimento informa muchas decisiones futuras
+
+   Cual tipo de leverage es mas valioso ahora?
+
+2. MAPA DE COMPONENTES
+   Lista todos los componentes de la solucion.
+   Para cada uno, evalua:
+   | Componente | Esfuerzo | Impacto Directo | Leverage (efecto secundario) | Score |
+   |------------|----------|-----------------|------------------------------|-------|
+
+3. IDENTIFICACION DEL MULTIPLICADOR
+   Cual es el componente que, si funciona bien, multiplica el valor de todo lo demas?
+   Por que exactamente tiene ese efecto multiplicador?
+
+4. ESTRATEGIA DE LEVERAGE
+   - Como aseguramos que ese componente reciba la mayor atencion?
+   - Que recursos desproporcionales le asignamos?
+   - Como lo protegemos de distracciones?
+
+5. LEVERAGE SECUNDARIO
+   Si el #1 falla, cual es el plan B de alto leverage?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">IDENTIFICACION DE MAXIMO LEVERAGE EN PROYECTO [CLIENTE]
+
+El proyecto incluye los siguientes componentes:
+[LISTA DE COMPONENTES/CASOS DE USO DEL PROYECTO]
+
+ANALISIS DE LEVERAGE:
+
+1. FRAMEWORK DE LEVERAGE PARA PROYECTOS GENAI
+
+   LEVERAGE TECNICO:
+   - Que componente, una vez construido, se reutiliza en multiples casos?
+   - Que integracion desbloquea muchas otras?
+   - Que capacidad de IA tiene aplicacion transversal?
+
+   LEVERAGE ORGANIZACIONAL:
+   - Que exito convierte mas escepticos?
+   - Que resultado impresiona mas al sponsor?
+   - Que caso de uso crea mas "envidia" en otras areas?
+
+   LEVERAGE DE CONOCIMIENTO:
+   - Que aprendizaje informa futuras decisiones?
+   - Que experimentacion reduce mas incertidumbre?
+   - Que piloto valida/invalida suposiciones clave?
+
+2. MATRIZ DE LEVERAGE
+   | Componente | Esfuerzo | Impacto Directo | Leverage Tecnico | Leverage Org. | Leverage Conocimiento | SCORE TOTAL |
+   |------------|----------|-----------------|------------------|---------------|----------------------|-------------|
+
+3. EL "KEYSTONE" DEL PROYECTO
+   El componente con mayor leverage es [X] porque:
+   - [razon 1]
+   - [razon 2]
+
+   Si [X] funciona, entonces automaticamente:
+   - [consecuencia 1]
+   - [consecuencia 2]
+
+4. ESTRATEGIA DE CONCENTRACION DE RECURSOS
+   Dado que [X] es el mayor leverage:
+   - Quien del equipo mas senior trabaja en esto?
+   - Cuanto tiempo dedicamos vs. otros componentes?
+   - Que riesgos mitigamos primero?
+   - Como medimos exito temprano?
+
+5. PLAN B DE LEVERAGE
+   Si [X] falla o se complica, cual es el siguiente componente
+   de mayor leverage al que pivoteamos?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPT 16 -->
+        <div class="prompt-card" id="prompt-16">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <h2>
+              <span class="prompt-number">16</span>
+              Reconstruir desde la Verdad (META)
+            </h2>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+          </div>
+          <div class="prompt-content">
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-quote-left"></i> Prompt Original</h3>
+              <div class="original-prompt">
+                "If I rebuilt this from raw truth, what would it become?"
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-search"></i> Analisis</h3>
+              <div class="analysis-box">
+                <div class="strength-box">
+                  <h4><i class="fas fa-check"></i> Fortalezas</h4>
+                  <p>Maxima sintesis de todo el framework, pregunta generativa poderosa.</p>
+                </div>
+                <div class="weakness-box">
+                  <h4><i class="fas fa-times"></i> Debilidades</h4>
+                  <p>Muy abstracto, necesita estructura para ser accionable.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-magic"></i> Version Optimizada</h3>
+              <div class="code-block">EJERCICIO DE RECONSTRUCCION RADICAL
+
+Para [SITUACION/ORGANIZACION/PROYECTO]:
+
+1. VERDADES FUNDAMENTALES
+   Olvida todo lo que "sabes". Cuales son las verdades innegables?
+   - Sobre el problema que resolvemos
+   - Sobre quien lo tiene y cuanto le importa
+   - Sobre que hace que una solucion sea buena
+   - Sobre nuestras capacidades reales
+   - Sobre el contexto de mercado/industria
+
+2. MENTIRAS CONVENIENTES
+   Que cosas repetimos que sabemos (en el fondo) no son verdad?
+   - Sobre nuestro producto/servicio
+   - Sobre nuestros clientes
+   - Sobre nuestra competencia
+   - Sobre nuestro modelo de negocio
+   - Sobre nuestro equipo/capacidades
+
+3. DISENO DESDE CERO
+   Si empezaras hoy, con las verdades fundamentales y sin las mentiras:
+   - Que construirias?
+   - Como lo ofrecerias?
+   - A quien y como?
+   - Con que equipo y estructura?
+
+4. PUENTE AL PRESENTE
+   Como movemos gradualmente de donde estamos a ese diseno ideal?
+
+5. UNA ACCION INMEDIATA
+   Cual es UNA cosa que podemos hacer esta semana que nos acerque?</div>
+            </div>
+
+            <div class="subsection">
+              <h3 class="subsection-title"><i class="fas fa-rocket"></i> Aplicacion MAindset</h3>
+              <div class="code-block">RECONSTRUCCION DESDE PRIMEROS PRINCIPIOS: PROYECTO [CLIENTE]
+
+Antes de continuar, hagamos un reset completo.
+
+1. VERDADES FUNDAMENTALES SOBRE ESTE CLIENTE
+
+   SOBRE SU PROBLEMA:
+   - Cual es el problema REAL (no el que dicen)?
+   - Cuanto les cuesta este problema en terminos cuantificables?
+   - Por que no lo han resuelto antes?
+
+   SOBRE GENAI Y ESTE PROBLEMA:
+   - Es GenAI realmente la mejor solucion? (honestamente)
+   - Que puede GenAI hacer REALMENTE bien aqui?
+   - Que NO puede hacer bien (limitaciones honestas)?
+
+   SOBRE EL CLIENTE:
+   - Estan genuinamente listos para adoptar?
+   - Tienen los datos/sistemas/cultura necesarios?
+   - El sponsor tiene poder real y compromiso sostenido?
+
+   SOBRE MAINDSET:
+   - Somos los mejores para este proyecto? Por que?
+   - Donde estan nuestras limitaciones honestas?
+   - Que necesitamos aprender/desarrollar?
+
+2. MENTIRAS CONVENIENTES A ABANDONAR
+   Cosas que decimos/asumimos que probablemente no son verdad:
+   - [lista honesta de suposiciones cuestionables]
+
+3. DISENO IDEAL DEL PROYECTO
+   Partiendo SOLO de las verdades, como disenariamos este engagement?
+
+   ALCANCE HONESTO:
+   - [que si y que no]
+
+   TIMELINE REALISTA:
+   - [fases y tiempos honestos]
+
+   RECURSOS NECESARIOS:
+   - [lo que realmente se necesita, no lo que el presupuesto permite]
+
+   METRICAS HONESTAS:
+   - [que podemos realmente prometer]
+
+4. RECONCILIACION CON REALIDAD
+   Dado el diseno ideal vs. las restricciones reales:
+   - Que negociamos con el cliente?
+   - Que riesgos asumimos conscientemente?
+   - Que conversaciones dificiles debemos tener?
+
+5. ACCION INMEDIATA
+   La unica cosa mas importante que debemos hacer AHORA para
+   construir sobre verdades en lugar de suposiciones es:
+   [accion especifica y concreta]</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Summary Section -->
+    <section class="summary-section" id="resumen">
+      <div class="container">
+        <h2 class="section-title">Resumen Ejecutivo</h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3><i class="fas fa-star"></i> Mejoras Clave en los Prompts</h3>
+            <ul>
+              <li><strong>ESTRUCTURA:</strong> Cada prompt tiene un framework paso a paso en lugar de una pregunta abierta</li>
+              <li><strong>ESPECIFICIDAD:</strong> Incluyen categorias especificas, preguntas guia y formatos de output</li>
+              <li><strong>APLICABILIDAD:</strong> Conectan directamente con la metodologia Assessment → Ejecucion → Expansion</li>
+              <li><strong>ACCIONABILIDAD:</strong> Cada prompt termina con outputs concretos y decisiones especificas</li>
+              <li><strong>BALANCE:</strong> Combinan pensamiento radical con pragmatismo para implementacion real</li>
+            </ul>
+          </div>
+
+          <div class="summary-card">
+            <h3><i class="fas fa-sitemap"></i> Cuando Usar Cada Prompt</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fase del Proyecto</th>
+                    <th>Prompts Recomendados</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Discovery / Assessment</td>
+                    <td>#1, #3, #8, #11, #16</td>
+                  </tr>
+                  <tr>
+                    <td>Diseno de Solucion</td>
+                    <td>#2, #4, #7, #9, #12</td>
+                  </tr>
+                  <tr>
+                    <td>Planificacion</td>
+                    <td>#5, #6, #13, #14, #15</td>
+                  </tr>
+                  <tr>
+                    <td>Retrospectiva</td>
+                    <td>#10, #16</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-card" style="margin-top: 2rem;">
+          <h3><i class="fas fa-layer-group"></i> Integracion con Metodologia MAindset</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem;">
+            <div>
+              <span class="phase-badge phase-assessment">ASSESSMENT</span>
+              <p style="margin-top: 0.5rem;">Usar prompts <strong>#1, #3, #8, #11</strong> para diagnostico profundo del cliente y sus necesidades reales.</p>
+            </div>
+            <div>
+              <span class="phase-badge phase-execution">EJECUCION</span>
+              <p style="margin-top: 0.5rem;">Usar prompts <strong>#5, #9, #12, #13, #15</strong> para diseno de sprints efectivos y priorizacion.</p>
+            </div>
+            <div>
+              <span class="phase-badge phase-expansion">EXPANSION</span>
+              <p style="margin-top: 0.5rem;">Usar prompts <strong>#10, #14, #16</strong> para escalar soluciones y sostener el cambio.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>Documento preparado para <strong>MAindset</strong> - Consultoria en IA Generativa</p>
+        <p>Noviembre 2025 | <a href="index.html">Volver a Alfil Consulting</a></p>
+      </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+      // Toggle prompt cards
+      function togglePrompt(header) {
+        const card = header.parentElement;
+        card.classList.toggle('collapsed');
+      }
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Show/hide back to top button
+      window.addEventListener('scroll', function() {
+        const backToTop = document.querySelector('.back-to-top');
+        if (window.scrollY > 500) {
+          backToTop.style.display = 'flex';
+        } else {
+          backToTop.style.display = 'none';
+        }
+      });
+
+      // Initialize - hide back to top
+      document.querySelector('.back-to-top').style.display = 'none';
+    </script>
+  </body>
+</html>
